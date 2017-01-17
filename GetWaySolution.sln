@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GATEWAY", "Getway\GATEWAY.csproj", "{66131187-DC06-4436-B618-FC1499DDA6FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetWay.Service", "GetWay.Service\GetWay.Service.csproj", "{74BBA318-5801-4A7A-94AC-757BAB13C3FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66131187-DC06-4436-B618-FC1499DDA6FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66131187-DC06-4436-B618-FC1499DDA6FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66131187-DC06-4436-B618-FC1499DDA6FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66131187-DC06-4436-B618-FC1499DDA6FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74BBA318-5801-4A7A-94AC-757BAB13C3FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74BBA318-5801-4A7A-94AC-757BAB13C3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74BBA318-5801-4A7A-94AC-757BAB13C3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74BBA318-5801-4A7A-94AC-757BAB13C3FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
