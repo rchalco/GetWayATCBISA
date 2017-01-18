@@ -21,12 +21,17 @@ namespace GetWay.Service
             // 
             // serviceProcessInstaller1
             // 
+            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
+            
+
             // 
             // JobFingerInstaller
             // 
-            this.GetWayInstaller.ServiceName = "GetWayService";
+            this.GetWayInstaller.ServiceName = "GATEWAY_ATC_BISA";
+            this.GetWayInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
+
             // 
             // ProjectInstaller
             // 

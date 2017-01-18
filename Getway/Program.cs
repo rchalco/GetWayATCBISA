@@ -202,23 +202,37 @@ namespace GetWay
             requestPurchase.movilNumber = movilNumber;
             requestPurchase.referenceNumber = referenceNumber;
             requestPurchase.smsPIN = smsPIN;
+            Escribir("montoRecibido:" + amount);
+            Escribir("commerce:" + commerce);
+            Escribir("currency:" + currency);
+            Escribir("movilNumber:" + movilNumber);
+            Escribir("referenceNumber:" + referenceNumber);
+            //Escribir("smsPIN:" + smsPIN);
+
             BISAService.purchasePOSATCResponse responsePurchase = new BISAService.purchasePOSATCResponse();
             clienteBisa.ClientCredentials.ServiceCertificate.SetDefaultCertificate(StoreLocation.LocalMachine, StoreName.My, X509FindType.FindBySubjectName, System.Configuration.ConfigurationManager.AppSettings["nombreCertificadoBISA_SOAP"]);
             try
             {
+                Escribir("Enviando Request a BISA...");
                 clienteBisa.Open();
                 responsePurchase = clienteBisa.purchasePOSATC(requestPurchase);
                 respuesta.code = responsePurchase.code;
                 respuesta.cardNumber = responsePurchase.cardNumber;
                 respuesta.expiration = responsePurchase.expiration.ToString("yyMM", System.Globalization.CultureInfo.InvariantCulture);
                 respuesta.referenceNumber = referenceNumber;
+                Escribir("Respuesta exitosa recibida...");
+                Escribir("cardNumber: "+ responsePurchase.cardNumber);
+                Escribir("expiration: " + respuesta.expiration);
+                Escribir("referenceNumber: " + respuesta.referenceNumber);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 respuesta.cardNumber = "";
                 respuesta.code = "99";
                 respuesta.expiration = "";
                 respuesta.referenceNumber = referenceNumber;
+                Escribir("error en Respuesta BISA...:"+ex.Message);
+               
             }
 
             return respuesta;

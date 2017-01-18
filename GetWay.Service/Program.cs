@@ -14,6 +14,7 @@ namespace GetWay.Service
         /// </summary>
         static void Main()
         {
+
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {

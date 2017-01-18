@@ -15,12 +15,13 @@ namespace GetWay.Service
         public GetWayServicePoint()
         {
             InitializeComponent();
-            this.EventLog.Source = this.ServiceName;
+            this.EventLog.Source = "Gateway_log";
             this.EventLog.Log = "Application";
         }
-
+       
         protected override void OnStart(string[] args)
         {
+
             if (!EventLog.SourceExists(this.EventLog.Source))
             {
                 EventLog.CreateEventSource(this.EventLog.Source, this.EventLog.Log);
