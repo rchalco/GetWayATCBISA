@@ -128,6 +128,9 @@ namespace GetWay
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static void IniciarListenerINAC()
         {
             TcpListener tcpListener = null;
@@ -151,21 +154,24 @@ namespace GetWay
             }
             while (true)
             {
-                tcpListener.Start();
-                Escribir("Esperando mensaje del POS...");
-                //Console.WriteLine("Esperando mensaje del POS...");
-                Thread.Sleep(10);
-                TcpClient tcpClient = tcpListener.AcceptTcpClient();
-                tcpClient.NoDelay = true;
-                byte[] bytes = new byte[256];
-                NetworkStream stream = tcpClient.GetStream();
-                stream.Read(bytes, 0, bytes.Length);
-                SocketHelper helper = new SocketHelper();
-                Escribir("Mensaje recibido");
-                //Console.Write("Mensaje recibido");
-                helper.processMsg(tcpClient, stream, bytes);
-                stream.Flush();
-                tcpClient.Close();
+                if (tcpListener != null)
+                {
+                    tcpListener.Start();
+                    Escribir("Esperando mensaje del POS...");
+                    //Console.WriteLine("Esperando mensaje del POS...");
+                    Thread.Sleep(10);
+                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                    tcpClient.NoDelay = true;
+                    byte[] bytes = new byte[256];
+                    NetworkStream stream = tcpClient.GetStream();
+                    stream.Read(bytes, 0, bytes.Length);
+                    SocketHelper helper = new SocketHelper();
+                    Escribir("Mensaje recibido");
+                    //Console.Write("Mensaje recibido");
+                    helper.processMsg(tcpClient, stream, bytes);
+                    stream.Flush();
+                    tcpClient.Close();
+                }
                 Escribir("Fin de ciclo");
             }
 
@@ -188,6 +194,16 @@ namespace GetWay
                     X509Chain chain, SslPolicyErrors sslPolicyErrors)
            { return true; };
 
+            if (Convert.ToInt32(currency) != 0)
+            {
+                respuesta.cardNumber = "";
+                respuesta.code = "99";
+                respuesta.expiration = "";
+                respuesta.referenceNumber = str_reference_number;
+                Escribir("Moneda no admitida, numero de referencia:" + str_reference_number);
+                return respuesta;
+            }
+
             BISAService.purchasePOSATCRequest requestPurchase = new BISAService.purchasePOSATCRequest();
             BISAService.aquaClient clienteBisa = new BISAService.aquaClient();
             clienteBisa.ClientCredentials.UserName.UserName = System.Configuration.ConfigurationManager.AppSettings["usuarioBISA_SOAP"];
@@ -202,11 +218,11 @@ namespace GetWay
             requestPurchase.movilNumber = movilNumber;
             requestPurchase.referenceNumber = referenceNumber;
             requestPurchase.smsPIN = smsPIN;
-            Escribir("montoRecibido:" + amount);
-            Escribir("commerce:" + commerce);
-            Escribir("currency:" + currency);
-            Escribir("movilNumber:" + movilNumber);
-            Escribir("referenceNumber:" + referenceNumber);
+            Escribir("monto Recibido:" + amount);
+            Escribir("Comercio:" + commerce);
+            Escribir("Moneda:" + currency);
+            Escribir("Numero de Telefono:" + movilNumber);
+            Escribir("Numer de Referencia:" + referenceNumber);
             //Escribir("smsPIN:" + smsPIN);
 
             BISAService.purchasePOSATCResponse responsePurchase = new BISAService.purchasePOSATCResponse();
@@ -221,9 +237,10 @@ namespace GetWay
                 respuesta.expiration = responsePurchase.expiration.ToString("yyMM", System.Globalization.CultureInfo.InvariantCulture);
                 respuesta.referenceNumber = referenceNumber;
                 Escribir("Respuesta exitosa recibida...");
-                Escribir("cardNumber: "+ responsePurchase.cardNumber);
-                Escribir("expiration: " + respuesta.expiration);
-                Escribir("referenceNumber: " + respuesta.referenceNumber);
+                Escribir("Codigo de Respuesta BISA:"+responsePurchase.code);
+                //Escribir("cardNumber: "+ responsePurchase.cardNumber);
+                Escribir("fecha de expiracion: " + respuesta.expiration);
+                Escribir("Numero de referencia: " + respuesta.referenceNumber);
             }
             catch (Exception ex)
             {
